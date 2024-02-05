@@ -7,5 +7,5 @@ class ennemi(pygame.sprite.Sprite):
         self.image = pygame.image.load('Asset/Joueur/peso provi.png') # metre skin
         self.rect = self.image.get_rect()
         self.rect.x = 900
-        self.rect.y = 500
+        self.rect.y = 450
         self.vit = 3
