@@ -9,7 +9,7 @@ pygame.init()
 pygame.display.set_caption("Manifeste")
 # dimension de la fenètre
 
-screen = pygame.display.set_mode((1920,1080),(pygame.FULLSCREEN) )# met la fenètre en full scrren)
+screen = pygame.display.set_mode((1000,600))
 
 #chargment du jeux
 running = True
