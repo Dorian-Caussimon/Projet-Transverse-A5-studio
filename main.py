@@ -5,6 +5,10 @@ class joueur :
     def _init_(self):
         self.health = 100
 
+class ennemi :
+    def _init_(self):
+        self.health = 100
+
 pygame.init()
 pygame.display.set_caption("Manifeste")
 # dimension de la fenètre
@@ -27,6 +31,7 @@ while running :
 
     # affiche personage
     screen.blit(jeux.joueur.image, jeux.joueur.rect)
+    screen.blit(jeux.ennemi.image, jeux.ennemi.rect)
 
     #mise a jour de l'écrant
     pygame.display.flip()
