@@ -1,13 +1,6 @@
 import pygame
 from jeux import jeux
 
-class joueur :
-    def _init_(self):
-        self.health = 100
-
-class ennemi :
-    def _init_(self):
-        self.health = 100
 
 pygame.init()
 pygame.display.set_caption("Manifeste")
@@ -33,6 +26,10 @@ while running :
     screen.blit(jeux.joueur.image, jeux.joueur.rect)
     screen.blit(jeux.ennemi.image, jeux.ennemi.rect)
 
+    # affihe projectil
+    jeux.joueur.projectiles.draw(screen)
+    for projectile in jeux.joueur.projectiles :
+        projectile.mouvement()
     #mise a jour de l'écrant
     pygame.display.flip()
 
@@ -40,3 +37,6 @@ while running :
 
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                jeux.joueur.projectile()
