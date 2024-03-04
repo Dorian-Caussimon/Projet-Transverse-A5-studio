@@ -7,7 +7,7 @@ class ennemi(pygame.sprite.Sprite):
         self.image = pygame.image.load('Asset/Joueur/peso provi.png') # metre skin
         self.rect = self.image.get_rect()
         self.x = 900
-        self.y = 450
+        self.y = 400
         self.vit = 1/2
 
 
@@ -16,7 +16,7 @@ class ennemi(pygame.sprite.Sprite):
             self.x-=self.vit
 
     def perdu(self):
-        if self.x<=10:
+        if self.x<=50:
             return True
         else:
             return False
