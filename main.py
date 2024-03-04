@@ -15,31 +15,37 @@ jeux = jeux()
 
 # importer un arrière plan
 backgroud = pygame.image.load('Asset/Background.jpg') # en attente de backgroud
-
+l_ennemis = []
+max_ennemis = 1
 
 #boucle pour maintenire la fenètre
 while running :
-    while jeux.ennemi.perdu() == False:
-        #affiche background
-        screen.blit(backgroud,(0,0))
+    # affiche background
+    screen.blit(backgroud, (0, 0))
 
-        # affiche personage
-        screen.blit(jeux.joueur.image, jeux.joueur.rect)
+    # affiche personage
+    screen.blit(jeux.joueur.image, jeux.joueur.rect)
 
-        #affichage des ennemis
-        screen.blit(jeux.ennemi.image, (jeux.ennemi.x, jeux.ennemi.y))
-        jeux.ennemi.mouv()
+    # ajouter des ennemis
 
-        # affiche projectile
-        jeux.joueur.projectiles.draw(screen)
-        for projectile in jeux.joueur.projectiles :
-            projectile.mouvement()
-        #mise a jour de l'écrant
-        pygame.display.flip()
+    # affichage des ennemis
+    #for i in l_ennemis:
+    screen.blit(jeux.ennemi.image, (jeux.ennemi.pos, jeux.ennemi.y))
+    jeux.ennemi.mouv()
 
-    #game over
-    screen.fill((0, 0, 0))
+    # affiche projectile
+    jeux.joueur.projectiles.draw(screen)
+    for projectile in jeux.joueur.projectiles:
+        projectile.mouvement()
+
+    # game over
+    if jeux.ennemi.perdu() == True:
+        screen.fill((0, 0, 0))
+
+    # mise a jour de l'écrant
     pygame.display.flip()
+
+
 
     for event in pygame.event.get():
 
