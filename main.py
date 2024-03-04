@@ -24,14 +24,21 @@ while running :
 
     # affiche personage
     screen.blit(jeux.joueur.image, jeux.joueur.rect)
-    screen.blit(jeux.ennemi.image, jeux.ennemi.rect)
 
-    # affihe projectil
+    #affichage des ennemis
+    screen.blit(jeux.ennemi.image, (jeux.ennemi.x, jeux.ennemi.y))
+    jeux.ennemi.mouv()
+
+    # affiche projectile
     jeux.joueur.projectiles.draw(screen)
     for projectile in jeux.joueur.projectiles :
         projectile.mouvement()
     #mise a jour de l'écrant
     pygame.display.flip()
+
+    #game over
+    if jeux.ennemi.perdu() == True:
+        running = False
 
     for event in pygame.event.get():
 
