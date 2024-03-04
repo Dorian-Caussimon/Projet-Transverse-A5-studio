@@ -8,7 +8,7 @@ class ennemi(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = 900
         self.y = 450
-        self.vit = 1/5
+        self.vit = 1/2
 
 
     def mouv(self):
