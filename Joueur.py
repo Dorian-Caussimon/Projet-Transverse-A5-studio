@@ -1,5 +1,5 @@
 import pygame
-
+import math
 class joueur(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -9,3 +9,5 @@ class joueur(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 10
         self.rect.y = 400
+        self.angle = (math.pi / 4)
+        self.speed = 5

@@ -1,34 +1,21 @@
 import pygame
 import math
-class projectile(pygame.sprite.Sprite):
-    def __init__(self,screen):
+
+class Projectile(pygame.sprite.Sprite):
+    def __init__(self):
         super().__init__()
-        self.screen = screen
-        self.angle = 45
-        self.velocity = 100
-        self.gravity = 9.8
         self.damage = 50
-        self.image = pygame.image.load("Asset/Projectile/projectile provisoire.png") #en attente
+        self.image = pygame.image.load("Asset/Projectile/projectile provisoire.png")  # Image du projectile (à remplacer)
         self.rect = self.image.get_rect()
         self.rect.x = 90
         self.rect.y = 400
-        self.time = 0
-        self.vectx = self.velocity * math.cos(math.radians(self.angle))
-        self.vecty = self.velocity * math.sin(math.radians(self.angle))
+        self.velocity_x = 0  # Vitesse horizontale du projectile
+        self.velocity_y = 0  # Vitesse verticale du projectile
+        self.gravity = 0.5  # Gravité appliquée au projectile
 
-    def update(self, temps):
-        self.time += temps
-        self.rect.x += self.vectx * self.time
-        self.rect.y += (self.vecty * self.time + 0.5 * self.gravity * self.time ** 2)
-        if self.rect.y > 600: # dimmension de la fenètre de jeux
-            self.rect.y = 600
-
-    def ajust_angle(self, d):
-        self.angle += d
-        self.vectx = self.velocity * math.cos(math.radians(self.angle))
-        self.vecty = -self.velocity * math.sin(math.radians(self.angle))
-
-    def ajust_vitesse(self, d):
-        self.velocity += d
-        self.vectx = self.velocity * math.cos(math.radians(self.angle))
-        self.vecty = -self.velocity * math.sin(math.radians(self.angle))
+    def update(self):
+        # Mise à jour de la position en fonction des vitesses horizontale et verticale
+        self.rect.x += self.velocity_x
+        self.rect.y += self.velocity_y
+        # Mise à jour de la vitesse verticale en appliquant la gravité
+        self.velocity_y += self.gravity

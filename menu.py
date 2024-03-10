@@ -1,3 +1,4 @@
+'''
 #pour menu
 import pygame
 
@@ -22,7 +23,7 @@ button_rect = button.get_rect()
 
 # creation du bouton cliquable
 
-
+'''
 
 
 
