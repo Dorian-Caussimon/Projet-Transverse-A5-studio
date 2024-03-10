@@ -21,8 +21,7 @@ screen.blit(button,(0,0))
 button_rect = button.get_rect()
 
 # creation du bouton cliquable
-if event.type == pygame.MOUSEBUTTONDOWN:
-    if button_rect.collidepoint(event.pos):
+
 
 
 
