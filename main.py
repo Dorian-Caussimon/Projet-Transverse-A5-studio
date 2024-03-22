@@ -1,6 +1,6 @@
 import pygame
 import math
-from jeux import jeux
+from Jeux import jeux
 from Projectile import Projectile
 
 pygame.init()
@@ -25,6 +25,8 @@ while running:
     screen.blit(jeu.joueur.image, jeu.joueur.rect)
     screen.blit(jeu.ennemi.image, jeu.ennemi.rect)
 
+    #déplacement de l'ennemi
+    jeu.ennemi.mouv()
 
     # Dessiner la ligne d'indicateur de lancement
     start_pos = jeu.joueur.rect.center
@@ -34,6 +36,7 @@ while running:
     for projectile in projectiles:
         projectile.update()
         screen.blit(projectile.image, projectile.rect)
+
 
     pygame.display.flip()
 
