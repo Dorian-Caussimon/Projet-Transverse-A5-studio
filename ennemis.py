@@ -8,10 +8,12 @@ class ennemi(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 900
         self.rect.y = 400
+        self.pos = 900
         self.vit = 1/2
 
     def mouv(self):
-        self.rect.x -= self.vit
+        self.pos -= self.vit
+        self.rect.x = self.pos
 
     def perdu(self):
         if self.rect.x <= 50:
