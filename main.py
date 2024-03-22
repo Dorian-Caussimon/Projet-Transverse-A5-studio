@@ -28,6 +28,11 @@ while running:
     #déplacement de l'ennemi
     jeu.ennemi.mouv()
 
+    #collision avec le joueur et l'ennemi
+    collision_ennemi = pygame.Rect.colliderect(jeu.joueur.rect, jeu.ennemi.rect)
+    if collision_ennemi:
+        running = False
+
     # Dessiner la ligne d'indicateur de lancement
     start_pos = jeu.joueur.rect.center
     end_pos = (start_pos[0] + int(math.cos(launch_angle) * launch_speed * 10), start_pos[1] - int(math.sin(launch_angle) * launch_speed * 10))
@@ -36,6 +41,11 @@ while running:
     for projectile in projectiles:
         projectile.update()
         screen.blit(projectile.image, projectile.rect)
+        # collision avec l'ennemi et le projectile
+        collision_projectile = pygame.Rect.colliderect(jeu.ennemi.rect, projectile.rect)
+        if collision_projectile:
+            jeu.ennemi.new()
+
 
 
     pygame.display.flip()

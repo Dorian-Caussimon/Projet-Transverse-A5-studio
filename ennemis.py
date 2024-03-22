@@ -6,16 +6,15 @@ class ennemi(pygame.sprite.Sprite):
         self.pv_max = 100
         self.image = pygame.image.load('Asset/Joueur/peso provi.png') # metre skin
         self.rect = self.image.get_rect()
-        self.rect.x = 900
+        self.rect.x = 1000
         self.rect.y = 400
-        self.pos = 900
-        self.vit = 1/2
+        self.pos = 1000
+        self.vit = 1
 
     def mouv(self):
         self.pos -= self.vit
         self.rect.x = self.pos
 
-    def perdu(self):
-        if self.rect.x <= 50:
-            return True
-        return False
+    def new(self):
+        self.pos = 1000
+        self.rect.x = self.pos
