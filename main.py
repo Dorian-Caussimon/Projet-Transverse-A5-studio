@@ -44,9 +44,7 @@ while running:
         # collision avec l'ennemi et le projectile
         collision_projectile = pygame.Rect.colliderect(jeu.ennemi.rect, projectile.rect)
         if collision_projectile:
-            jeu.ennemi.new()
-
-
+            jeu.ennemi.new_ennemi()
 
     pygame.display.flip()
 

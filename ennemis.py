@@ -15,6 +15,7 @@ class ennemi(pygame.sprite.Sprite):
         self.pos -= self.vit
         self.rect.x = self.pos
 
-    def new(self):
+    def new_ennemi(self):
         self.pos = 1000
         self.rect.x = self.pos
+        self.pv = self.pv_max
