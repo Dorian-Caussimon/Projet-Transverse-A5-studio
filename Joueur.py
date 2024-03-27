@@ -8,6 +8,6 @@ class joueur(pygame.sprite.Sprite):
         self.image = pygame.image.load('Asset/Joueur/peso provi.png') # metre skin
         self.rect = self.image.get_rect()
         self.rect.x = 10
-        self.rect.y = 400
+        self.rect.y = 500
         self.angle = (math.pi / 4)
         self.speed = 5
