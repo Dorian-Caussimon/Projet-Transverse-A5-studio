@@ -1,29 +1,24 @@
-'''
 #pour menu
 import pygame
 
-# creation de la fenetre
-screen = pygame.display.set_mode((1920,1080),(pygame.FULLSCREEN) )
+class menu():
+    def __init__(self):
+        self.button_start = pygame.image.load('Asset/Menu/button_start.png')
+        self.rect_start = self.button_start.get_rect()
+
+        self.button_setting = pygame.image.load('Asset/Menu/button_setting.png')
+        self.rect_setting = self.button_setting.get_rect()
+
+        self.button_exit = pygame.image.load('Asset/Menu/button_exit.png')
+        self.rect_exit = self.button_exit.get_rect()
 
 
-# afficher l'arriere plan de l'ecran d'acceuil.
-back = pygame.image.load('Asset/image_jeux.jpg')
 
-# mettre l'ecran
-screen.blit(back ,(0,-200))
-#rafraichissement de l'ecran
-pygame.display.flip()
 
-# importation du bouton
-button = pygame.image.load('Asset/play.png')
 
-# a mettre dans le main quand le jeu n'a pas encore commencé
-screen.blit(button,(0,0))
-button_rect = button.get_rect()
 
 # creation du bouton cliquable
-
-'''
-
-
-
+if event.type == pygame.MOUSEBUTTONDOWN:
+    if button_rect.collidepoint(event.pos):
+        game.is_playing = True
+    # si le bouton de jeux est selectioné le jeux change d'etat et ce lance
