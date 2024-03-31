@@ -38,4 +38,3 @@ class jeux():
         for projectile in projectiles:
             projectile.update()  # met a jour la possition du projectile
             screen.blit(projectile.image, projectile.rect)  # met a jour l'écrant pour afficher le projectile
-
