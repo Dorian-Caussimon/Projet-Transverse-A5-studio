@@ -1,29 +1,19 @@
-'''
 #pour menu
 import pygame
 
-# creation de la fenetre
-screen = pygame.display.set_mode((1920,1080),(pygame.FULLSCREEN) )
+class menu():
+    def __init__(self):
+        self.button_start = pygame.image.load('Asset/Menu/button_start.png')
+        self.button_start = pygame.transform.scale(self.button_start,(210,200))
+        self.rect_start = self.button_start.get_rect()
+        self.rect_start.center = (400,200)
 
+        self.button_setting = pygame.image.load('Asset/Menu/button_setting.png')
+        self.button_setting = pygame.transform.scale(self.button_setting,(210,190))
+        self.rect_setting = self.button_setting.get_rect()
+        self.rect_setting.center = (400,350)
 
-# afficher l'arriere plan de l'ecran d'acceuil.
-back = pygame.image.load('Asset/image_jeux.jpg')
-
-# mettre l'ecran
-screen.blit(back ,(0,-200))
-#rafraichissement de l'ecran
-pygame.display.flip()
-
-# importation du bouton
-button = pygame.image.load('Asset/play.png')
-
-# a mettre dans le main quand le jeu n'a pas encore commencé
-screen.blit(button,(0,0))
-button_rect = button.get_rect()
-
-# creation du bouton cliquable
-
-'''
-
-
-
+        self.button_exit = pygame.image.load('Asset/Menu/button_exit.png')
+        self.button_exit = pygame.transform.scale(self.button_exit,(200,200))
+        self.rect_exit = self.button_exit.get_rect()
+        self.rect_exit.center = (400,500)

@@ -1,84 +1,56 @@
 import pygame
 import math
-from Jeux import jeux
+from jeux import jeux
 from Projectile import Projectile
 
 pygame.init()
 pygame.display.set_caption("Manifeste") #nom de la fenètre
-screen = pygame.display.set_mode((1000, 600)) # dimmension de la fenètre
+screen = pygame.display.set_mode((800, 800)) # dimmension de la fenètre
 
 running = True
-jeu = jeux()
+je = jeux()
 
 clock = pygame.time.Clock() # charge le temps pour l'utiliser dans le jeux
-background = pygame.image.load('Asset/Background.jpg') #charge l'image de l'arrière plan
+background = pygame.image.load('Asset/Background.png') #charge l'image de l'arrière plan
+background = pygame.transform.scale(background, (800,800))
+menu_background = pygame.image.load('Asset/Menu/back_menu.png')
+
 projectiles = pygame.sprite.Group()  # Groupe pour stocker les projectiles
 
-launch_angle = jeu.joueur.angle  # Angle initial
-launch_speed = jeu.joueur.speed  # Vitesse initiale
-
-font = pygame.font.Font(None, 30)  # Police de caractères pour afficher les informations
-
 while running:
-    time = clock.tick(60) / 1000
-    screen.blit(background, (0, 0))
-    screen.blit(jeu.joueur.image, jeu.joueur.rect)
-    screen.blit(jeu.ennemi.image, jeu.ennemi.rect)
+    time = clock.tick(60) / 1000 # Definit le temps
 
-    #déplacement de l'ennemi
-    jeu.ennemi.mouv()
-
-    #collision avec le joueur et l'ennemi
-    collision_ennemi = pygame.Rect.colliderect(jeu.joueur.rect, jeu.ennemi.rect)
-    if collision_ennemi:
-        running = False
-
-    # Dessiner la ligne d'indicateur de lancement
-    start_pos = jeu.joueur.rect.center
-    end_pos = (start_pos[0] + int(math.cos(launch_angle) * launch_speed * 10), start_pos[1] - int(math.sin(launch_angle) * launch_speed * 10))
-    pygame.draw.line(screen, (255, 0, 0), start_pos, end_pos, 2)
-
-    for projectile in projectiles:
-        projectile.update()
-        screen.blit(projectile.image, projectile.rect)
-        # collision avec l'ennemi et le projectile
-        collision_projectile = pygame.Rect.colliderect(jeu.ennemi.rect, projectile.rect)
-        if collision_projectile:
-            projectile.rect.x = 2000
-            jeu.ennemi.new_ennemi()
+    if je.is_running == False:
+        screen.blit(menu_background, (0, 0))
+        screen.blit(je.menu.button_start, je.menu.rect_start)
+        screen.blit(je.menu.button_exit, je.menu.rect_exit)
+        screen.blit(je.menu.button_setting, je.menu.rect_setting)
+    else:
+        je.start(screen, background, projectiles)
 
     pygame.display.flip()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            je.pressed[event.key] = True
+
+            if event.key == pygame.K_SPACE and len(projectiles) < 2:
                 # Lancer un nouveau projectile
-                new_projectile = Projectile()
-                new_projectile.rect.center = jeu.joueur.rect.center
-                new_projectile.rect.centerx += int(math.cos(launch_angle) * 50)  # Ajuster la position du projectile en fonction de l'angle
-                new_projectile.rect.centery -= int(math.sin(launch_angle) * 50)  # Ajuster la position du projectile en fonction de l'angle
-                new_projectile.velocity_x = math.cos(launch_angle) * launch_speed
-                new_projectile.velocity_y = -math.sin(launch_angle) * launch_speed
+                new_projectile = Projectile() # Crée une abréviation pour les nouveaux projectile
+                new_projectile.rect.center = je.joueur.rect.center
+                new_projectile.rect.centerx += int(math.cos(je.projet.angle) * 50)  # Ajuster la position du projectile en fonction de l'angle
+                new_projectile.rect.centery -= int(math.sin(je.projet.angle) * 50)  # Ajuster la position du projectile en fonction de l'angle
+                new_projectile.velocity_x = math.cos(je.projet.angle) * je.projet.speed # Ajuster la vitesse du projectile
+                new_projectile.velocity_y = -math.sin(je.projet.angle) * je.projet.speed # Ajuster la vitesse du projetile
                 projectiles.add(new_projectile)
 
-            elif event.key == pygame.K_UP:
-                # Augmenter la puissance de lancer
-                launch_speed += 1
+        elif event.type == pygame.KEYUP:
+            je.pressed[event.key] = False
 
-            elif event.key == pygame.K_DOWN:
-                # Diminuer la puissance de lancer
-                launch_speed -= 1
-                if launch_speed < 1:
-                    launch_speed = 1  # Assure que la puissance ne devienne pas négative
-
-            elif event.key == pygame.K_RIGHT:
-                # Augmenter l'angle
-                launch_angle += 0.1
-
-            elif event.key == pygame.K_LEFT:
-                # Diminuer l'angle
-                launch_angle -= 0.1
-
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if je.menu.rect_start.collidepoint(event.pos): #permet l'appuuis du bonton pour staret le jeux
+                je.is_running = True
 pygame.quit()
