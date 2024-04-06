@@ -2,7 +2,6 @@ import pygame
 import math
 from jeux import jeux
 from Projectile import Projectile
-from ennemis import ennemi
 
 pygame.init()
 pygame.display.set_caption("Manifeste") #nom de la fenètre
