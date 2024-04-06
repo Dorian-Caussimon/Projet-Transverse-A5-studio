@@ -2,6 +2,7 @@ import pygame
 import math
 from jeux import jeux
 from Projectile import Projectile
+from ennemis import ennemi
 
 pygame.init()
 pygame.display.set_caption("Manifeste") #nom de la fenètre
@@ -27,6 +28,12 @@ while running:
         screen.blit(je.menu.button_setting, je.menu.rect_setting)
     else:
         je.start(screen, background, projectiles)
+        je.ennemi.mouv()
+        if je.joueur.rect.colliderect(je.ennemi):
+            running = False
+        for projectile in projectiles:
+            if je.ennemi.rect.colliderect(projectile):
+                je.ennemi.spawn_ennemi()
 
     pygame.display.flip()
 
