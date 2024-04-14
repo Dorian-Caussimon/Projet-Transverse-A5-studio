@@ -2,7 +2,7 @@ import pygame
 class joueur(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.pv = 100
+        self.pv = 5
         self.pv_max = 100
         self.image = pygame.image.load('Asset/Joueur/peso provi.png') # metre skin
         self.rect = self.image.get_rect()

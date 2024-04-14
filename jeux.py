@@ -8,13 +8,15 @@ from Projectile import Projectile
 class jeux():
     def __init__(self):
         self.is_running = False
-        self.projet = Projectile()
+        self.is_posing = False
+        self.is_game_over = False
+        self.projet = Projectile() # récupère la classe Projectile
         self.joueur = joueur() # récupère la classe joueur
         self.ennemi = ennemi() # récupère la classe ennemi
         self.menu = menu() # récupère la classe menu
         self.pressed = {}
 
-    def start(self,screen,background,projectiles):
+    def start(self, screen, background, projectiles_group):
         screen.blit(background, (0, 0))  # affiche l'arrière plan
         screen.blit(self.joueur.image, self.joueur.rect)  # affiche le joueur
         screen.blit(self.ennemi.image, self.ennemi.rect)  # affiche les énemie
@@ -35,6 +37,30 @@ class jeux():
                    start_pos[1] - int(math.sin(self.projet.angle) * self.projet.speed * 10))
         pygame.draw.line(screen, (255, 0, 0), start_pos, end_pos, 2)
 
-        for projectile in projectiles:
-            projectile.update()  # met a jour la possition du projectile
-            screen.blit(projectile.image, projectile.rect)  # met a jour l'écrant pour afficher le projectile
+        for proj in projectiles_group:
+            proj.update()  # met a jour la possition du projectile
+            screen.blit(proj.image, proj.rect)  # met a jour l'écrant pour afficher le projectile
+            if proj.rect.x > 800 or proj.rect.y > 800: # supprime le projetile si il sort de l'écrant
+                projectiles_group.remove(proj)
+            if self.ennemi.rect.colliderect(proj): # supprime le projectile si il touche l'enemie
+                self.ennemi.spawn_ennemi()
+                projectiles_group.remove(proj)
+        self.ennemi.mouv()
+        if self.joueur.rect.colliderect(self.ennemi):
+            self.is_game_over = True
+            
+    def interface_menu (self, screen, menu_background):
+        screen.blit(menu_background, (0, 0))
+        screen.blit(self.menu.button_start, self.menu.rect_start)
+        screen.blit(self.menu.button_exit, self.menu.rect_exit)
+        screen.blit(self.menu.button_setting, self.menu.rect_setting)
+
+    def interface_game_over(self, screen, menu_background):
+        screen.blit(menu_background,(0,0))
+        screen.blit(self.menu.button_restart, self.menu.rect_resume)
+        screen.blit(self.menu.button_menu,self.menu.rect_menu)
+
+    def interface_pause(self,screen, menu_background):
+        screen.blit(menu_background,(0,0))
+        screen.blit(self.menu.button_resume, self.menu.rect_resume)
+        screen.blit(self.menu.button_menu,self.menu.rect_menu)
