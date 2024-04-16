@@ -19,16 +19,16 @@ class menu():
         self.rect_exit.center = (400,500)
 
         self.button_menu = pygame.image.load('Asset/Menu/button_menu.png')
-        self.button_menu = pygame.transform.scale(self.button_menu,(200,200))
+        self.button_menu = pygame.transform.scale(self.button_menu,(150,150))
         self.rect_menu = self.button_menu.get_rect()
         self.rect_menu.center = (400,200)
 
         self.button_resume = pygame.image.load('Asset/Menu/button_resume.png')
-        self.button_resume = pygame.transform.scale(self.button_resume,(200,200))
+        self.button_resume = pygame.transform.scale(self.button_resume,(150,150))
         self.rect_resume = self.button_resume.get_rect()
-        self.rect_resume.center = (400,350)
+        self.rect_resume.center = (400,450)
 
         self.button_restart = pygame.image.load('Asset/Menu/button_restart.png')
-        self.button_restart = pygame.transform.scale(self.button_restart,(200,200))
+        self.button_restart = pygame.transform.scale(self.button_restart,(150,150))
         self.rect_restart = self.button_restart.get_rect()
-        self.rect_restart.center = (400,350)
+        self.rect_restart.center = (400,450)

@@ -21,15 +21,16 @@ while running:
     clock.tick(60)
 
     pygame.display.flip()
-    if je.is_running == False:
+    if je.is_menu == True:
         je.interface_menu(screen, menu_background)
     elif je.is_posing == True:
         je.interface_pause(screen, menu_background)
+    elif je.is_running == True:
+        je.start(screen, background, proj_group)
     elif je.is_game_over == True:
         je.interface_game_over(screen, menu_background)
-    elif je.is_running == True :
-        je.start(screen, background, proj_group)
 
+    print('menu:{} posing:{} running:{} game over:{}'.format(je.is_menu,je.is_posing,je.is_running,je.is_game_over))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -38,7 +39,8 @@ while running:
             je.pressed[event.key] = True
 
             if event.key == pygame.K_ESCAPE:
-                je.is_pausing = True
+                je.is_posing = True
+                je.is_running = False
 
             if event.key == pygame.K_SPACE and len(proj_group) < 2: # faire un cooldown --------------------------------------------------------------------
                 # Lancer un nouveau projectile
@@ -52,24 +54,4 @@ while running:
 
         elif event.type == pygame.KEYUP:
             je.pressed[event.key] = False
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if je.menu.rect_start.collidepoint(event.pos): #permet l'appuuis du bonton pour start le jeux
-                je.is_running = True
-
-            elif je.menu.rect_exit.collidepoint(event.pos): #permet l'appuuis du bonton pour quiter le jeux
-                pygame.quit()
-
-            elif je.menu.rect_resume.collidepoint(event.pos): #permet l'appuuis du bonton pour retourner dans le jeux
-                je.is_posing = False
-                je.is_running = True
-
-            elif je.menu.rect_restart.collidepoint(event.pos): #permet l'appuuis du bonton pour restart le jeux
-                je.is_running = True
-                je.is_game_over = False
-
-            elif je.menu.rect_menu.collidepoint(event.pos): #permet l'appuis du bouton pour retourner au menu
-                je.is_running = False
-                je.is_posing = False
-                je.is_game_over = False
 pygame.quit()
