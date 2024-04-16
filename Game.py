@@ -29,6 +29,7 @@ class GAME():
     def start(self, screen, background, projectiles_group):
         screen.blit(background, (0, 0))  # affiche l'arrière plan
         screen.blit(self.joueur.image, self.joueur.rect)  # affiche le joueur
+        self.joueur.pv_bar(screen) # affiche la barre de vie du joueur
         screen.blit(self.ennemi.image, self.ennemi.rect)  # affiche les énemie
 
         # modification de la puissance et de l'angle du projectile
@@ -64,10 +65,15 @@ class GAME():
 
         for ene in self.enemy_group:
             ene.mouv()
+            ene.pv_bar(screen) # affiche la barre de vie de l'ennemi
             if ene.rect.x < 0:
                 self.enemy_group.remove(ene)
             if ene.rect.colliderect(self.joueur.rect):
                 self.enemy_group.remove(ene)
+                self.joueur.pv -= 1
+                if self.joueur.pv == 0:
+                    self.is_running = False
+                    self.is_game_over = True
             for proj in projectiles_group:
                 if ene.rect.colliderect(proj):
                     ene.pv -= 1
@@ -145,6 +151,9 @@ class GAME():
         screen.blit(self.menu.button_menu, self.menu.rect_menu)
 
         while self.is_game_over == True:
+            self.joueur.pv = self.joueur.pv_max
+            for ene in self.enemy_group:
+                self.enemy_group.remove(ene)
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -153,5 +162,5 @@ class GAME():
                         self.is_game_over = False
 
                     elif self.menu.rect_menu.collidepoint(event.pos):  # permet l'appuis du bouton pour retourner au menu
-                        self.is_running = False
+                        self.is_menu = True
                         self.is_game_over = False
