@@ -1,5 +1,5 @@
 import pygame
-class joueur(pygame.sprite.Sprite):
+class JOUEUR(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.pv = 5

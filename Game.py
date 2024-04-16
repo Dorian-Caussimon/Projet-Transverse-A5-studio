@@ -1,23 +1,31 @@
 import math
 import pygame
-from Joueur import joueur
-from ennemis import ennemi
+from pygame import sprite
+
+from Player import JOUEUR
+from enemy import ENEMY
 from menu import menu
-from Projectile import Projectile
+from Projectile import PROJECTILE
+import random
 
-
-class jeux():
+class GAME():
     def __init__(self):
-        self.is_running = False
         self.is_menu = True
+        self.is_running = False
         self.is_posing = False
         self.is_game_over = False
-        self.projet = Projectile()  # récupère la classe Projectile
-        self.joueur = joueur()  # récupère la classe joueur
-        self.ennemi = ennemi()  # récupère la classe ennemi
+        self.projet = PROJECTILE()  # récupère la classe Projectile
+        self.joueur = JOUEUR()  # récupère la classe joueur
+        self.ennemi = ENEMY()  # récupère la classe ENNEMIE
         self.menu = menu()  # récupère la classe menu
+        self.proj_group = pygame.sprite.Group()
         self.pressed = {}
+        #groupe d'Enemy
+        self.enemy_group = pygame.sprite.Group()
 
+    def spawn_enemy(self):
+        enemy = ENEMY()
+        self.enemy_group.add(enemy)
     def start(self, screen, background, projectiles_group):
         screen.blit(background, (0, 0))  # affiche l'arrière plan
         screen.blit(self.joueur.image, self.joueur.rect)  # affiche le joueur
@@ -26,10 +34,13 @@ class jeux():
         # modification de la puissance et de l'angle du projectile
         if self.pressed.get(pygame.K_RIGHT):
             self.projet.decrease_angle()  # Diminuer l'angle
+
         elif self.pressed.get(pygame.K_LEFT):
             self.projet.increase_angle()  # augmante l'angle
+
         elif self.pressed.get(pygame.K_UP):
             self.projet.increase_speed()  # Augmenter la puissance de lancer
+
         elif self.pressed.get(pygame.K_DOWN):
             self.projet.decrease_speed()  # Diminuer la puissance de lancer
 
@@ -39,20 +50,61 @@ class jeux():
                    start_pos[1] - int(math.sin(self.projet.angle) * self.projet.speed * 10))
         pygame.draw.line(screen, (255, 0, 0), start_pos, end_pos, 2)
 
+
         for proj in projectiles_group:
             proj.update()  # met a jour la possition du projectile
             screen.blit(proj.image, proj.rect)  # met a jour l'écrant pour afficher le projectile
+
             if proj.rect.x > 800 or proj.rect.y > 800:  # supprime le projetile si il sort de l'écrant
                 projectiles_group.remove(proj)
-            if self.ennemi.rect.colliderect(proj):  # supprime le projectile si il touche l'enemie
-                self.ennemi.spawn_ennemi()
-                projectiles_group.remove(proj)
-        self.ennemi.mouv()
-        if self.joueur.rect.colliderect(self.ennemi):
-            self.joueur.pv -= 1
-        elif self.joueur.rect.colliderect(self.ennemi):
-            self.is_game_over = True
-            self.is_running = False
+
+        if len(self.enemy_group) < 2:
+            self.spawn_enemy()
+        self.enemy_group.draw(screen) # affiche les enemie
+
+        for ene in self.enemy_group:
+            ene.mouv()
+            if ene.rect.x < 0:
+                self.enemy_group.remove(ene)
+            if ene.rect.colliderect(self.joueur.rect):
+                self.enemy_group.remove(ene)
+            for proj in projectiles_group:
+                if ene.rect.colliderect(proj):
+                    ene.pv -= 1
+                    projectiles_group.remove(proj)
+                if ene.rect.colliderect(proj) and ene.pv == 0:
+                    self.enemy_group.remove(ene)
+
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+                self.pressed[event.key] = True
+
+                if event.key == pygame.K_ESCAPE:
+                    self.is_posing = True
+                    self.is_running = False
+
+                if event.key == pygame.K_SPACE and len(projectiles_group) < 2:  # faire un cooldown --------------------------------------------------------------------
+                    # Lancer un nouveau projectile
+                    new_projectile = PROJECTILE()  # Crée une instance pour les nouveaux projectile
+                    new_projectile.rect.center = self.joueur.rect.center
+                    new_projectile.rect.centerx += int(math.cos(self.projet.angle) * 50)  # Ajuster la position du projectile en fonctionl'angle
+                    new_projectile.rect.centery -= int(math.sin(self.projet.angle) * 50)  # Ajuster la position du projectile en fonction de l'angle
+                    new_projectile.velocity_x = math.cos(self.projet.angle) * self.projet.speed  # Ajuster la vitesse du projectile
+                    new_projectile.velocity_y = - math.sin(self.projet.angle) * self.projet.speed  # Ajuster la vitesse du projetile
+                    projectiles_group.add(new_projectile)
+
+            elif event.type == pygame.KEYUP:
+                self.pressed[event.key] = False
+
+
+
+
+
+
+
+    
     def interface_menu(self, screen, menu_background):
         screen.blit(menu_background, (0, 0))
         screen.blit(self.menu.button_start, self.menu.rect_start)
