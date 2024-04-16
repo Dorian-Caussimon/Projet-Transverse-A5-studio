@@ -1,6 +1,6 @@
 import pygame
 
-class Projectile(pygame.sprite.Sprite):
+class PROJECTILE(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.damage = 50
