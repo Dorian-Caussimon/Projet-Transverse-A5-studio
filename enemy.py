@@ -19,7 +19,7 @@ class ENEMY(pygame.sprite.Sprite):
         self.rect.x = 900 + random.randint(0,200)
         self.rect.y = 500 + random.randint(0,100)
         self.pos = 700
-        self.vit = 10 + random.randint(0,2)
+        self.vit = 1 + random.randint(0,2)
 
     def mouv(self):
         self.rect.x -= self.vit
