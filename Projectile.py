@@ -1,10 +1,12 @@
 import pygame
 
+missile = pygame.image.load("Asset/Projectile/Missile.png")
+missile = pygame.transform.scale(missile, (75, 75))
 class PROJECTILE(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.damage = 50
-        self.image = pygame.image.load("Asset/Projectile/projectile provisoire.png")  # Image du projectile (à remplacer)
+        self.image = missile  # Image du projectile (à remplacer)
         self.rect = self.image.get_rect()
         self.rect.x = 90
         self.rect.y = 400

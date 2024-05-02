@@ -13,7 +13,8 @@ je = GAME()
 clock = pygame.time.Clock() # charge le temps pour l'utiliser dans le jeux
 background = pygame.image.load('Asset/Background.png') #charge l'image de l'arrière plan
 background = pygame.transform.scale(background, (800,800))
-menu_background = pygame.image.load('Asset/Menu/back_menu.png')
+menu_background = pygame.image.load('Asset/Menu/Menu.png')
+menu_background = pygame.transform.scale(menu_background, (800, 800))
 
 proj_group = pygame.sprite.Group()  # Groupe pour stocker les proj_group
 enemy_group = pygame.sprite.Group()
