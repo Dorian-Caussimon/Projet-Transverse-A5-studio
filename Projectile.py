@@ -6,7 +6,7 @@ class PROJECTILE(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.damage = 50
-        self.image = missile  # Image du projectile (à remplacer)
+        self.image = missile
         self.rect = self.image.get_rect()
         self.rect.x = 90
         self.rect.y = 400

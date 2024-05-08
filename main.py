@@ -15,13 +15,14 @@ background = pygame.image.load('Asset/Background.png') #charge l'image de l'arri
 background = pygame.transform.scale(background, (800,800))
 menu_background = pygame.image.load('Asset/Menu/Menu.png')
 menu_background = pygame.transform.scale(menu_background, (800, 800))
+pygame.mixer.music.load('Asset/Pixelland 8-Bit.mp3')
+pygame.mixer.music.play(-1)
 
 proj_group = pygame.sprite.Group()  # Groupe pour stocker les proj_group
 enemy_group = pygame.sprite.Group()
 
 while running:
     clock.tick(60)
-
     pygame.display.flip()
     if je.is_menu == True:
         je.interface_menu(screen, menu_background)
